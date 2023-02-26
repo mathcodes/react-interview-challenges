@@ -1,13 +1,19 @@
 import React from 'react'
-import RecipeGrabber from './RecipeGrabber'
-import Chat from './Chat'
+
+import { GiMeal } from 'react-icons/gi'
+
 
 export default function Main() {
   return (
-<div class="w-full h-screen absolute top-0 left-0 z-0 bg-[../texture.svg]">
-  <img src="../../texture.svg" alt="" class="w-full h-full absolute top-0 left-0 z-0"/>
-  <Chat />
-  <RecipeGrabber />
+<div class="text-white container">
+
+    <h1 class="text-4xl font-bold text-white text-center pt-10">Welcome!</h1>
+    <div class="flex flex-row justify-center">
+      <h3 class="flex text-2xl font-bold text-white text-center pt-10">Recipe Grabber - </h3>
+      <p><GiMeal />
+      This app utilizes Tailwind CSS, React, Firebase, and some 3rd-party APIs to create a recipe search engine. Users can search for recipes by ingredient, and save recipes to their
+      </p>
    </div>
+  </div>
   )
 }

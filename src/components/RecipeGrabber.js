@@ -1,112 +1,3 @@
-// import React, { useState } from 'react';
-
-// const RecipeGrabber = () => {
-//   const [recipes, setRecipes] = useState([]);
-
-//   const handleFetchRecipes = async () => {
-//     const response = await fetch('https://api.spoonacular.com/recipes/findByIngredients?apiKey=30f3274cbfe143059c9b4053147fba68&ingredients=apples,+flour,+sugar&number=2');
-//     const data = await response.json();
-//     setRecipes(data);
-//   };
-
-//   return (
-//     <div>
-//       <button onClick={handleFetchRecipes} className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-//         Fetch Recipes
-//       </button>
-//       <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2">
-//         {recipes.map(recipe => (
-//           <div key={recipe.id} className="overflow-hidden bg-white rounded-lg shadow-lg">
-//             <img src={recipe.image} alt={recipe.title} className="object-cover w-full h-64" />
-//             <div className="p-4">
-//               <h3 className="mb-2 text-lg font-medium">{recipe.title}</h3>
-//               <div className="flex flex-wrap justify-between">
-//                 {recipe.usedIngredients.map(ingredient => (
-//                   <img src={`${ingredient.image}`} alt={ingredient.name} key={ingredient.name} className="object-cover w-8 h-8 mb-2 mr-2 rounded-full" />
-//                 ))}
-//                 {recipe.missedIngredients.map(ingredient => (
-//                   <img src={`${ingredient.image}`} alt={ingredient.name} key={ingredient.name} className="object-cover w-12 h-12 p-1 mb-2 mr-2 border-2 border-red-600 rounded-full " />
-//                 ))}
-//               </div>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>  );
-// };
-
-// export default RecipeGrabber;
-
-// import React, { useState } from 'react';
-
-// const RecipeGrabber = () => {
-//   const [tags, setTags] = useState([]);
-//   const [recipes, setRecipes] = useState([]);
-
-//   const handleAddTag = (event) => {
-//     event.preventDefault();
-//     const newTag = event.target.elements.tag.value.trim();
-//     if (newTag && !tags.includes(newTag)) {
-//       setTags([...tags, newTag]);
-//       event.target.elements.tag.value = '';
-//     }
-//   };
-
-//   const handleRemoveTag = (tagToRemove) => {
-//     setTags(tags.filter(tag => tag !== tagToRemove));
-//   };
-
-//   const handleFindRecipes = async () => {
-//     const ingredients = tags.join(',');
-//     const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=30f3274cbfe143059c9b4053147fba68&ingredients=${ingredients}&number=5`);
-//     const data = await response.json();
-//     setRecipes(data);
-//   };
-
-//   return (
-//     <div>
-//       <form onSubmit={handleAddTag}>
-//         <label htmlFor="tag" className="mr-2">Add Tag:</label>
-//         <input type="text" name="tag" className="px-4 py-2 mr-2 border rounded-lg" />
-//         <button type="submit" className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Add</button>
-//       </form>
-//       <div className="flex flex-wrap mt-4">
-//         {tags.map(tag => (
-//           <div key={tag} className="flex items-center justify-between px-4 py-2 mt-2 mr-2 text-sm bg-white rounded-full">
-//             {tag}
-//             <button onClick={() => handleRemoveTag(tag)} className="text-gray-400 hover:text-gray-600">
-//               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-//                 <path fillRule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 011.414 1.414L11.414 10l2.293 2.293a1 1 0 01-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L8.586 10 6.293 7.707a1 1 0 010-1.414z" clipRule="evenodd" />
-//               </svg>
-//             </button>
-//           </div>
-//         ))}
-//       </div>
-//       <button onClick={handleFindRecipes} className="px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Find Recipes</button>
-//       <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2">
-//         {recipes.map(recipe => (
-//           <div key={recipe.id} className="overflow-hidden bg-white rounded-lg shadow-lg">
-//             <img src={recipe.image} alt={recipe.title}
-//         className="object-cover w-full h-48" />
-//         <div className="px-6 py-4">
-//           <div className="mb-2 text-xl font-bold">{recipe.title}</div>
-//           <p className="text-base text-gray-700">
-//             Missed Ingredients: {recipe.missedIngredients.map(ingredient => ingredient.name).join(', ')}
-//           </p>
-//           <p className="text-base text-gray-700">
-//             Used Ingredients: {recipe.usedIngredients.map(ingredient => ingredient.name).join(', ')}
-//           </p>
-//         </div>
-//       </div>
-//     ))}
-//   </div>
-// </div>
-// );
-// };
-
-// export default RecipeGrabber;
-
-
 import React, { useState, useContext } from 'react';
 import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 import { FirebaseContext } from '../index';
@@ -184,13 +75,15 @@ const RecipeGrabber = () => {
         <button type="submit">ADD</button>
       </form>
       {tags.length > 0 && (
-        <ul>
+        <div>
           {tags.map((tag) => (
-            <li key={tag}>
+            <div
+              className="text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+            key={tag}>
               {tag} <button onClick={() => handleRemoveTag(tag)}>X</button>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
       <button onClick={handleFindRecipes}>FIND RECIPES</button>
       <div className="grid grid-cols-2 gap-4">

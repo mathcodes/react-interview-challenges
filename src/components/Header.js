@@ -19,23 +19,28 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
       </div>
       <div>
         <button
-          className="inline-flex px-4 py-2 font-bold text-white rounded flex-end bg-sky-400 hover:bg-sky-300"
-          >
-            <Link to="./">Chat</Link>
+            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+            >
+            <Link to="./chat">Chat</Link>
           </button>
         <button
-          className="inline-flex px-4 py-2 font-bold text-white rounded flex-end bg-sky-400 hover:bg-sky-300"
-          >
+            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+            >
+            <Link to="./recipes">Recipes</Link>
+          </button>
+        <button
+            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+            >
             <Link to="./profile">Profile</Link>
           </button>
         {user ? (
           <button
-            className="px-4 py-2 font-bold text-white rounded bg-sky-400 hover:bg-sky-300"
-            onClick={handleSignOut}>Logout</button>
+          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+          onClick={handleSignOut}>Logout</button>
         ) : (
           <button
-            className="px-4 py-2 font-bold text-white rounded bg-sky-400 hover:bg-sky-300"
-            onClick={handleSignIn}>Login</button>
+          className="text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+          onClick={handleSignIn}>Login</button>
         )}
       </div>
     </header>

@@ -95,15 +95,16 @@ function Chat({ user, handleLogout, handleSignIn }) {
 
   return (
     <div className="flex flex-col items-center justify-center ">
-      <div className="text-2xl">Chat</div>
+      <div className="my-4 text-3xl text-white">Chat</div>
 
 
-      <div className="grid w-4/6 grid-cols-1 p-2 overflow-y-scroll border-2 border-black rounded-lg h-96 bg-sky-300">
+      <div className="grid w-4/6 grid-cols-1 p-2 overflow-y-scroll border-2 rounded-lg border-zinc-200 h-96 bg-zinc-900">
         <div className="flex flex-col-reverse mx-6">
           {sortedMessages.map((message) => {
             return (
 
               <div>
+
                 <div className="flex flex-col">
                   <div key={message.id} className="relative p-2 ">
                     <div
@@ -112,7 +113,7 @@ function Chat({ user, handleLogout, handleSignIn }) {
                           ?
                           'flex absolute top-0 right-0 p-2 mb-2 text-white bg-green-600 border border-black rounded-lg '
                           :
-                          'flex absolute top-0 left-0 p-2 mb-2 text-white bg-blue-600 border border-black rounded-lg '
+                          'flex absolute top-0 left-0 p-2 mb-2 text-white bg-zinc-700 border border-black rounded-lg '
                       }
                     >
                       <p>{message.text}</p>
@@ -153,7 +154,7 @@ function Chat({ user, handleLogout, handleSignIn }) {
           onChange={(event) => setNewMessage(event.target.value)}
         />
         <button
-          className="w-3/12 inline-block rounded bg-black p-3 font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+            className="w-3/12 p-3 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
 
           type="submit">Send</button>
       </form>
@@ -164,21 +165,21 @@ function Chat({ user, handleLogout, handleSignIn }) {
           <button
             type="button"
             onClick={handleGetTemp}
-            className="px-4 py-2 text-sm font-bold text-white bg-green-500 rounded-lg shadow-md"
+            className="p-2 m-1 SyntaxError: Unexpected identifier 'replaceCarriageReturns'. Expected an opening '(' before a function's parameter list.orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
           >
             Get Temp
           </button>
           <button
             type="button"
             onClick={handleGetTemp}
-            className="px-4 py-2 text-sm font-bold text-white bg-green-500 rounded-lg shadow-md"
+            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
           >
             Get Temp
           </button>
           <button
             type="button"
             onClick={handleGetTemp}
-            className="px-4 py-2 font-bold text-white transition ease-out rounded-sm duration-5000 hover:rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-purple-500 hover:to-pink-500 hover:scale-110"
+            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
           >
             Get Temp
           </button>
