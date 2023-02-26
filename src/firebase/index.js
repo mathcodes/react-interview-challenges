@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import firebase from 'firebase/app';
+import {firebase} from './firebase';
 import 'firebase/auth';
 import 'firebase/database';
 
@@ -61,3 +61,5 @@ export const FirebaseProvider = ({ children }) => {
 
   return <FirebaseContext.Provider value={contextValue}>{children}</FirebaseContext.Provider>;
 };
+
+export default FirebaseProvider;

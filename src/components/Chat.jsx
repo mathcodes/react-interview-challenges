@@ -130,7 +130,7 @@ function Chat({ user, handleLogout, handleSignIn }) {
                       />
                     </button>
                     <button
-                      className="m-2 inline-block rounded text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                      className="m-2 inline-block rounded text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out "
                       onClick={() => handleDeleteMessage(message.id)}
                     >
                       <FaTrash
@@ -138,51 +138,11 @@ function Chat({ user, handleLogout, handleSignIn }) {
                       />
                     </button>
                   </div>
-
                 </div>
-
               </div>
-
             );
-
           })}
         </div>
-        {/* <div className="flex flex-col-reverse mx-6">
-          {currentUserMessages.map((message) => (
-            <div>
-              <div className="flex flex-col">
-                <div key={message.id} className="p-2 mb-2 text-white bg-green-600 border border-black rounded-lg ">
-                  <div className="items-center justify-between ">
-                    <p>{message.text}</p>
-                  </div>
-                </div>
-                <div
-                  className="flex flex-row self-end p-2 mb-2 text-white ">
-                  <p className="text-xs">{new Date(message.timestamp).toLocaleString()}</p>
-                  <button
-                    className="m-2 inline-block rounded p-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                    onClick={() => handleSaveMessage(message.id)}
-                  >
-                    <FaSave
-                      className="justify-center w-3 h-2 text-yellow-400 transition duration-150 ease-in-out transform hover:scale-150"
-                    />
-                  </button>
-                  <button
-                    className="m-2 inline-block rounded text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                    onClick={() => handleDeleteMessage(message.id)}
-                  >
-                    <FaTrash
-                      className="justify-center w-3 h-2 text-red-400 transition duration-150 ease-in-out transform hover:scale-150"
-                    />
-                  </button>
-                </div>
-
-              </div>
-
-            </div>
-          ))}
-
-        </div> */}
       </div>
       <form
         onSubmit={handleSendMessage} className="w-2/3 message-form">
@@ -200,28 +160,28 @@ function Chat({ user, handleLogout, handleSignIn }) {
 
       <div className="flex flex-col items-center w-full h-full">
         <h1 className="text-2xl font-bold text-center">Utilities</h1>
-<div className="flex flex-row justify-between w-2/3">
-        <button
-          type="button"
-          onClick={handleGetTemp}
-          className="px-4 py-2 text-sm font-bold text-white bg-green-500 rounded-lg shadow-md"
-        >
-          Get Temp
-        </button>
-        <button
-          type="button"
-          onClick={handleGetTemp}
-          className="px-4 py-2 text-sm font-bold text-white bg-green-500 rounded-lg shadow-md"
-        >
-          Get Temp
-        </button>
-        <button
-          type="button"
-          onClick={handleGetTemp}
-          className="px-4 py-2 font-bold text-white transition ease-out rounded-sm duration-5000 hover:rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-purple-500 hover:to-pink-500 hover:scale-110"
-        >
-          Get Temp
-        </button>
+        <div className="flex flex-row justify-between w-2/3">
+          <button
+            type="button"
+            onClick={handleGetTemp}
+            className="px-4 py-2 text-sm font-bold text-white bg-green-500 rounded-lg shadow-md"
+          >
+            Get Temp
+          </button>
+          <button
+            type="button"
+            onClick={handleGetTemp}
+            className="px-4 py-2 text-sm font-bold text-white bg-green-500 rounded-lg shadow-md"
+          >
+            Get Temp
+          </button>
+          <button
+            type="button"
+            onClick={handleGetTemp}
+            className="px-4 py-2 font-bold text-white transition ease-out rounded-sm duration-5000 hover:rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-purple-500 hover:to-pink-500 hover:scale-110"
+          >
+            Get Temp
+          </button>
 
         </div>
       </div>

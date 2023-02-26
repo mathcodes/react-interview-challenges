@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { firebase } from './firebase/firebase';
+import { FirebaseProvider } from './index';
 import App from './App';
 
 // Create a Firebase context and wrap the App component
