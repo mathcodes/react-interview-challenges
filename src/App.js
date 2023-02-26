@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { firebase } from './firebase/firebase';
 import { FirebaseContext } from './index';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Chat from './components/Chat';
+import Main from './components/Main';
 import Header from './components/Header';
 import UserProfile from './components/UserProfile';
 import LoginPage from './components/LoginPage';
@@ -38,7 +38,7 @@ function App() {
       <div>
         <Header user={user} fName={fName} handleSignIn={handleSignIn} handleSignOut={handleSignOut} id={user ? user.uid : null} />
         <Routes>
-          <Route path="/" element={user ? <Chat handleSignIn={handleSignIn} handleSignOut={handleSignOut} /> : <LoginPage />} />
+          <Route path="/" element={user ? <Main /> : <LoginPage />} />
           <Route path="/profile" element={user ? <UserProfile /> : <LoginPage />} />
         </Routes>
       </div>

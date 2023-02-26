@@ -6,7 +6,7 @@ import Header from './Header';
 function UserProfile() {
   const { messages, savedMessages, handleDeleteMessage, handleSaveMessage } = useContext(FirebaseContext);
   const firebaseInstance = useContext(FirebaseContext);
-  const [userProfile, setUserProfile] = useState({ name: '', id: '', credentials: null, savedMessages: [] });
+  const [userProfile, setUserProfile] = useState({ name: '', id: '', credentials: null, savedMessages: [], savedRecipes: [] });
 
   // Function that changes the user ids into the first five characters of the user id
   const shortenUserId = (userId) => {
@@ -21,6 +21,7 @@ function UserProfile() {
         id: currentUser.uid,
         credentials: currentUser.providerData,
         savedMessages: [],
+        savedRecipes: [],
       };
       setUserProfile(userProfile);
 
@@ -37,28 +38,83 @@ function UserProfile() {
           }));
         }
       });
+
+      const savedRecipesRef = database.ref(`savedRecipes/${currentUser.uid}`);
+      savedRecipesRef.on('value', (snapshot) => {
+        const savedRecipesData = snapshot.val();
+        if (savedRecipesData) {
+          const savedRecipes = Object.entries(savedRecipesData).map(([key, value]) => {
+            return { id: key, ...value };
+          });
+          setUserProfile((prevUserProfile) => ({
+            ...prevUserProfile,
+            savedRecipes: savedRecipes,
+          }));
+        }
+      }
+      );
+
     }
   }, [firebaseInstance]);
+
+  const handleDeleteRecipe = (recipeId) => {
+    const recipeRef = database.ref(`savedRecipes/${userProfile.id}/${recipeId}`);
+    recipeRef.remove();
+  };
+
+  const handleSaveRecipe = (recipeId) => {
+    const recipe = messages.find((recipe) => recipe.id === recipeId);
+    const savedRecipesRef = database.ref(`savedRecipes/${userProfile.id}`);
+    const newSavedRecipeRef = savedRecipesRef.push();
+    newSavedRecipeRef.set({ text: recipe.text, userId: recipe.userId, timestamp: recipe.timestamp });
+    setUserProfile((prevUserProfile) => ({
+      ...prevUserProfile,
+      savedRecipes: [...prevUserProfile.savedRecipes, { id: newSavedRecipeRef.key, ...recipe }],
+    }));
+  };
+
+
+
+
 
   return (
     <div className="text-white UserProfile bg-sky-600">
       <div className="flex justify-between p-4 bg-sky-500">
-      <h1>User Profile</h1>
-      <p>Name: {userProfile.name}</p>
-      <p>ID: {shortenUserId(userProfile.id)}</p>
+        <h1>User Profile</h1>
+        <p>Name: {userProfile.name}</p>
+        <p>ID: {shortenUserId(userProfile.id)}</p>
       </div>
-      <div className="flex justify-between w-1/2 p-4 rounded-md bg-sky-500">
-      <ul>
-        {userProfile.savedMessages.map((message) => (
-          <>
-          <li key={message.id} className="p-4 p-6 m-2 rounded-md bg-sky-400">
-            <p className="text-xl font-bold">{message.text}</p>
-            <p>User ID: {message.userId}</p>
-          </li>
-                      <p>{new Date(message.timestamp).toLocaleString()}</p>
-          </>
-        ))}
-      </ul>
+      <div className="flex flex-row justify-between p-4 rounded-md bg-sky-500">
+        <div className="flex justify-between w-1/2 p-4 rounded-md bg-sky-500">
+          <ul>
+            {userProfile.savedMessages.map((message) => (
+              <>
+                <li key={message.id} className="p-4 p-6 m-2 rounded-md bg-sky-400">
+                  <p className="text-xl font-bold">{message.text}</p>
+                  <p>User ID: {message.userId}</p>
+                </li>
+                <p>{new Date(message.timestamp).toLocaleString()}</p>
+              </>
+            ))}
+          </ul>
+        </div>
+        <div className="flex justify-between w-1/2 p-4 rounded-md bg-sky-500">
+          <ul>
+            {userProfile.savedRecipes.map((recipe) => (
+              <>
+                <li key={recipe.id} className="p-4 p-6 m-2 rounded-md bg-sky-400">
+                  <p className="text-xl font-bold">{recipe.title}</p>
+                  <p>Recipe ID: {recipe.recipeId}</p>
+                  <img src={recipe.image} alt={recipe.title} />
+                  <button onClick={() => handleSaveRecipe(recipe)}>Save</button>
+                  <button onClick={() => handleDeleteRecipe(recipe.id)}>Delete</button>
+                </li>
+                <p>{new Date(recipe.timestamp).toLocaleString()}</p>
+              </>
+            ))}
+          </ul>
+
+        </div>
       </div>
     </div>
   );
