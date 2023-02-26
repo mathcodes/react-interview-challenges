@@ -1,10 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { firebase } from './firebase/firebase';
 import { FirebaseContext } from './index';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Chat from './components/Chat';
+import Header from './components/Header';
+import UserProfile from './components/UserProfile';
+import LoginPage from './components/LoginPage';
+import './App.css';
+
 
 function App() {
   const [user, setUser] = useState(null);
+  const [fName, setFName] = useState(null);
   const firebaseInstance = useContext(FirebaseContext);
 
   // Function to handle signing in with Google account
@@ -23,21 +30,19 @@ function App() {
     setUser(user);
   });
 
+
+
+
   return (
-    <div>
-      {user ? (
-        <div>
-          <h1>Welcome, {user.displayName}!</h1>
-          <button onClick={handleSignOut}>Sign Out</button>
-          <Chat />
-        </div>
-      ) : (
-        <div>
-          <h1>Please sign in to continue.</h1>
-          <button onClick={handleSignIn}>Sign In with Google</button>
-        </div>
-      )}
-    </div>
+    <Router>
+      <div>
+        <Header user={user} fName={fName} handleSignIn={handleSignIn} handleSignOut={handleSignOut} id={user ? user.uid : null} />
+        <Routes>
+          <Route path="/" element={user ? <Chat handleSignIn={handleSignIn} handleSignOut={handleSignOut} /> : <LoginPage />} />
+          <Route path="/profile" element={user ? <UserProfile /> : <LoginPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

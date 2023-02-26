@@ -5,6 +5,7 @@ import App from './App';
 
 // Create a Firebase context and wrap the App component
 export const FirebaseContext = React.createContext(null);
+console.log(FirebaseContext);
 
 // use createRoot to render the App component
 
