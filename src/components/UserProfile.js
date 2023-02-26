@@ -42,7 +42,6 @@ function UserProfile() {
 
   return (
     <div className="text-white UserProfile bg-sky-600">
-      <Header fName={userProfile.name} />
       <div className="flex justify-between p-4 bg-sky-500">
       <h1>User Profile</h1>
       <p>Name: {userProfile.name}</p>

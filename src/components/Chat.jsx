@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FirebaseContext } from '../index';
 import { database } from '../firebase/firebase';
+
 // import save icon
 import { FaSave } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa';
@@ -8,11 +9,13 @@ import { Link } from 'react-router-dom';
 import Header from './Header';
 // import './Chat.css';
 
-function Chat({ handleLogout, handleSignIn }) {
+function Chat({ user, handleLogout, handleSignIn }) {
   const firebaseInstance = useContext(FirebaseContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [savedMessages, setSavedMessages] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   useEffect(() => {
     const messagesRef = database.ref('messages');
@@ -62,77 +65,166 @@ function Chat({ handleLogout, handleSignIn }) {
     setSavedMessages((prevSavedMessages) => [...prevSavedMessages, { id: newSavedMessageRef.key, ...message }]);
   };
 
+  const handleGetTemp = async (e) => {
+    let apiKey = '31b40bbc1dd3415db1783017232602';
+    try {
+      const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=28449&days=1&aqi=no&alerts=no`);
+      const data = await response.json();
+      const temp = data.current.temp_f;
+      console.log(temp);
+      setNewMessage(temp);
+      // handleSendMessage(newMessage);
+    } catch (error) {
+      console.error('Error fetching temp:', error);
+    }
+  };
+
+
 
 
   const currentUserMessages = messages.filter((message) => message.userId === firebaseInstance.auth().currentUser.uid);
   const incomingMessages = messages.filter((message) => message.userId !== firebaseInstance.auth().currentUser.uid);
+  const sortedMessages = messages.sort((a, b) => b.timestamp - a.timestamp);
+
+
+
 
   // const shortenUserId = (userId) => {
   //   return userId.slice(0, 5);
   // };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center ">
       <div className="text-2xl">Chat</div>
-      <div className="box-border grid grid-cols-2 p-2 overflow-y-scroll border-2 border-black rounded-lg h-96 bg-sky-300">
+
+
+      <div className="grid w-4/6 grid-cols-1 p-2 overflow-y-scroll border-2 border-black rounded-lg h-96 bg-sky-300">
         <div className="flex flex-col-reverse mx-6">
-          {incomingMessages.map((message) => (
-            <div key={message.id} className="self-start p-2 mb-2 bg-white border border-black rounded-lg">
-              <p>{message.text}</p>
-              {/* <p>From: {shortenUserId(message.userId)}</p> */}
-              <p>Timestamp: {new Date(message.timestamp).toLocaleString()}</p>
-              <button
-                className="m-2 inline-block rounded bg-yellow-400 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                onClick={() => handleSaveMessage(message.id)}>Save</button>
-              <button
-                className="m-2 inline-block rounded bg-red-400 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                onClick={() => handleDeleteMessage(message.id)}>Delete</button>
-            </div>
-          ))}
+          {sortedMessages.map((message) => {
+            return (
+
+              <div>
+                <div className="flex flex-col">
+                  <div key={message.id} className="relative p-2 ">
+                    <div
+                      className={
+                        message.userId === firebaseInstance.auth().currentUser.uid
+                          ?
+                          'flex absolute top-0 right-0 p-2 mb-2 text-white bg-green-600 border border-black rounded-lg '
+                          :
+                          'flex absolute top-0 left-0 p-2 mb-2 text-white bg-blue-600 border border-black rounded-lg '
+                      }
+                    >
+                      <p>{message.text}</p>
+                    </div>
+                  </div>
+                  <div
+                    className="flex flex-row self-end p-2 mb-2 text-white ">
+                    <p className="text-xs">{new Date(message.timestamp).toLocaleString()}</p>
+                    <button
+                      className="m-2 inline-block rounded p-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                      onClick={() => handleSaveMessage(message.id)}
+                    >
+                      <FaSave
+                        className="justify-center w-3 h-2 text-yellow-400 transition duration-150 ease-in-out transform hover:scale-150"
+                      />
+                    </button>
+                    <button
+                      className="m-2 inline-block rounded text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                      onClick={() => handleDeleteMessage(message.id)}
+                    >
+                      <FaTrash
+                        className="justify-center w-3 h-2 text-red-400 transition duration-150 ease-in-out transform hover:scale-150"
+                      />
+                    </button>
+                  </div>
+
+                </div>
+
+              </div>
+
+            );
+
+          })}
         </div>
-        <div className="flex flex-col-reverse mx-6">
+        {/* <div className="flex flex-col-reverse mx-6">
           {currentUserMessages.map((message) => (
             <div>
-            <div className="flex flex-col">
-              <div key={message.id} className="p-2 mb-2 text-white bg-green-600 border border-black rounded-lg ">
-                <div className="items-center justify-between ">
-                  <p>{message.text}</p>
+              <div className="flex flex-col">
+                <div key={message.id} className="p-2 mb-2 text-white bg-green-600 border border-black rounded-lg ">
+                  <div className="items-center justify-between ">
+                    <p>{message.text}</p>
+                  </div>
                 </div>
-              </div>
-              <div
-               className="flex flex-row self-end p-2 mb-2 text-white ">
-<p className="text-xs">{new Date(message.timestamp).toLocaleString()}</p>
-                <button
-                  className="m-2 inline-block rounded p-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                  onClick={() => handleSaveMessage(message.id)}
-                >
-                  <FaSave
-                    className="justify-center w-3 h-2 text-yellow-400 transition duration-150 ease-in-out transform hover:scale-150"
-                  />
-                </button>
-                <button
-                  className="m-2 inline-block rounded text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                  onClick={() => handleDeleteMessage(message.id)}
-                >
-                  <FaTrash
-                    className="justify-center w-3 h-2 text-red-400 transition duration-150 ease-in-out transform hover:scale-150"
-                  />
-                </button>
-              </div>
+                <div
+                  className="flex flex-row self-end p-2 mb-2 text-white ">
+                  <p className="text-xs">{new Date(message.timestamp).toLocaleString()}</p>
+                  <button
+                    className="m-2 inline-block rounded p-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                    onClick={() => handleSaveMessage(message.id)}
+                  >
+                    <FaSave
+                      className="justify-center w-3 h-2 text-yellow-400 transition duration-150 ease-in-out transform hover:scale-150"
+                    />
+                  </button>
+                  <button
+                    className="m-2 inline-block rounded text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                    onClick={() => handleDeleteMessage(message.id)}
+                  >
+                    <FaTrash
+                      className="justify-center w-3 h-2 text-red-400 transition duration-150 ease-in-out transform hover:scale-150"
+                    />
+                  </button>
+                </div>
 
-            </div>
+              </div>
 
             </div>
           ))}
+
+        </div> */}
+      </div>
+      <form
+        onSubmit={handleSendMessage} className="w-2/3 message-form">
+        <input
+          className="w-9/12 p-3 bg-zinc-100 "
+          type="text"
+          value={newMessage}
+          onChange={(event) => setNewMessage(event.target.value)}
+        />
+        <button
+          className="w-3/12 inline-block rounded bg-black p-3 font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+
+          type="submit">Send</button>
+      </form>
+
+      <div className="flex flex-col items-center w-full h-full">
+        <h1 className="text-2xl font-bold text-center">Utilities</h1>
+<div className="flex flex-row justify-between w-2/3">
+        <button
+          type="button"
+          onClick={handleGetTemp}
+          className="px-4 py-2 text-sm font-bold text-white bg-green-500 rounded-lg shadow-md"
+        >
+          Get Temp
+        </button>
+        <button
+          type="button"
+          onClick={handleGetTemp}
+          className="px-4 py-2 text-sm font-bold text-white bg-green-500 rounded-lg shadow-md"
+        >
+          Get Temp
+        </button>
+        <button
+          type="button"
+          onClick={handleGetTemp}
+          className="px-4 py-2 font-bold text-white transition ease-out rounded-sm duration-5000 hover:rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-purple-500 hover:to-pink-500 hover:scale-110"
+        >
+          Get Temp
+        </button>
 
         </div>
       </div>
-      <form
-        onSubmit={handleSendMessage} className="message-form">
-        <input className="m-2 bg-gray-300" type="text" value={newMessage} onChange={(event) => setNewMessage(event.target.value)} />
-        <button type="submit">Send</button>
-      </form>
-      <Link className="m-2 inline-block rounded bg-yellow-700 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]" to="/profile">PROFILE</Link>
     </div>
 
   );
