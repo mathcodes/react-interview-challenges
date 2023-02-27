@@ -10,7 +10,7 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
   };
 
   return (
-    <header className="flex flex-row justify-between p-4 border-b bg-zinc-800 border-zinc-400">
+    <header className="flex flex-row justify-between p-4 border-b-2 bg-zinc-800 border-zinc-400">
       <div className="inline-flex">
         <h1
           className="text-2xl font-bold text-white"
@@ -19,7 +19,7 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
       </div>
       <div>
         <button
-            className="p-2 m-1 text-orange-300 bg-orange-700 border rounded-md text-md border-zinc-400 hover:border-orange-700"
+            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
             >
             <Link to="./chat">Chat</Link>
           </button>
@@ -39,7 +39,7 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
           onClick={handleSignOut}>Logout</button>
         ) : (
           <button
-          className="text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
           onClick={handleSignIn}>Login</button>
         )}
       </div>

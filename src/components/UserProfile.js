@@ -78,33 +78,41 @@ function UserProfile() {
 
 
   return (
-    <div className="text-white UserProfile bg-sky-600">
-      <div className="flex justify-between p-4 bg-sky-500">
+    <div className="text-white UserProfile bg-zinc-800">
+      <div
+      className="flex flex-col justify-center p-4 rounded-md bg-zinc-800"
+      >
+        <div className="flex flex-row justify-between p-4 rounded-md bg-zinc-500">
+
         <h1>User Profile</h1>
         <p>Name: {userProfile.name}</p>
         <p>ID: {shortenUserId(userProfile.id)}</p>
       </div>
-      <div className="flex flex-row justify-between p-4 rounded-md bg-sky-500">
-        <div className="flex justify-between w-1/2 p-4 rounded-md bg-sky-500">
+      </div>
+      <div className="flex flex-row justify-between p-4 rounded-md bg-zinc-800">
+        <div className="flex justify-between w-1/2 p-4 rounded-md bg-zinc-800">
           <ul>
             {userProfile.savedMessages.map((message) => (
               <>
-                <li key={message.id} className="p-4 p-6 m-2 rounded-md bg-sky-400">
+                <li key={message.id} className="p-4 p-6 m-2 bg-green-900 rounded-md">
                   <p className="text-xl font-bold">{message.text}</p>
-                  <p>User ID: {message.userId}</p>
+                  <p
+                  className="text-xs "
+                  >User ID: {shortenUserId(message.userId)}</p>
                 </li>
-                <p>{new Date(message.timestamp).toLocaleString()}</p>
+                <p className="pl-5 text-xs"
+                >{new Date(message.timestamp).toLocaleString()}</p>
               </>
             ))}
           </ul>
         </div>
-        <div className="flex justify-between w-1/2 p-4 rounded-md bg-sky-500">
+        <div className="flex justify-between w-1/2 p-4 rounded-md bg-zinc-800">
           <ul>
             {userProfile.savedRecipes.map((recipe) => (
               <>
-                <li key={recipe.id} className="p-4 p-6 m-2 rounded-md bg-sky-400">
+                <li key={recipe.id} className="p-4 p-6 m-2 rounded-md bg-zinc-800">
                   <p className="text-xl font-bold">{recipe.title}</p>
-                  <p>Recipe ID: {recipe.recipeId}</p>
+                  <p>Recipe ID: {(recipe.recipeId)}</p>
                   <img src={recipe.image} alt={recipe.title} />
                   <button onClick={() => handleSaveRecipe(recipe)}>Save</button>
                   <button onClick={() => handleDeleteRecipe(recipe.id)}>Delete</button>

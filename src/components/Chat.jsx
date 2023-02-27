@@ -168,36 +168,7 @@ function Chat({ user, handleLogout, handleSignIn }) {
 
           type="submit">Send</button>
       </form>
-
-      <div className="flex flex-col items-center w-full h-full">
-        <h1 className="text-2xl font-bold text-center">Utilities</h1>
-        <div className="flex flex-row justify-between w-2/3">
-          <button
-            type="button"
-            onClick={handleGetTemp}
-            className="p-2 m-1 SyntaxError: Unexpected identifier 'replaceCarriageReturns'. Expected an opening '(' before a function's parameter list.orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-          >
-            Get Temp
-          </button>
-          <button
-            type="button"
-            onClick={handleGetTemp}
-            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-          >
-            Get Temp
-          </button>
-          <button
-            type="button"
-            onClick={handleGetTemp}
-            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-          >
-            Get Temp
-          </button>
-
-        </div>
-      </div>
     </div>
-
   );
 }
 
