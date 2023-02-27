@@ -69,33 +69,41 @@ const RecipeGrabber = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container flex flex-col items-center justify-center mx-auto mt-6 shadow-lg border-spacing-2">
       <form onSubmit={handleAddTag}>
-        <input type="text" name="tag" placeholder="Add tag" />
-        <button type="submit">ADD</button>
+        <input
+          className="p-2 m-2 text-white border rounded-md bg-zinc-800 text-md border-zinc-400 hover:bg-orange-700"
+        type="text" name="tag" placeholder="Add tag" />
+        <button
+          className="p-2 m-2 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:bg-orange-700"
+        type="submit">ADD</button>
       </form>
       {tags.length > 0 && (
-        <div>
+        <div className="flex flex-wrap items-center justify-center w-2/3 border">
           {tags.map((tag) => (
             <div
-              className="text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+              className="p-2 m-2 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
             key={tag}>
-              {tag} <button onClick={() => handleRemoveTag(tag)}>X</button>
+              {tag} <button
+              className="p-2 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:bg-orange-700 "
+              onClick={() => handleRemoveTag(tag)}>X</button>
             </div>
           ))}
         </div>
       )}
-      <button onClick={handleFindRecipes}>FIND RECIPES</button>
+      <button
+        className="w-2/3 p-2 my-2 text-orange-300 bg-red-500 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:bg-orange-700"
+      onClick={handleFindRecipes}>FIND RECIPES</button>
       <div className="grid grid-cols-2 gap-4">
         {recipes.map((recipe) => (
-          <div key={recipe.id} className="max-w-sm overflow-hidden rounded shadow-lg">
+          <div key={recipe.id} className="max-w-sm overflow-hidden border-2 rounded shadow-lg">
             <img
               src={recipe.image}
               alt={recipe.title}
               className="object-cover w-full h-48"
             />
             <div className="px-6 py-4">
-              <div className="mb-2 text-xl font-bold">{
+              <div className="mb-2 text-xl font-bold text-white">{
             recipe.title}</div>
             <div className="mb-2">
               {recipe.usedIngredients.map((ingredient) => (

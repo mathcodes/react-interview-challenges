@@ -16,8 +16,9 @@ function Chat({ user, handleLogout, handleSignIn }) {
   const [savedMessages, setSavedMessages] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-
+  // the useEffect below is a listener that will listen for changes in the database. Notice the empty dependency array at the end of the useEffect. This is a dependency array that will make sure that the useEffect will run only once when the component is mounted.
   useEffect(() => {
+    console.log('useEffect');
     const messagesRef = database.ref('messages');
     messagesRef.on('value', (snapshot) => {
       const messagesData = snapshot.val();
@@ -30,7 +31,8 @@ function Chat({ user, handleLogout, handleSignIn }) {
     });
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { // this useEffect is a listener that will listen for changes in the database every time the user logs in, and specifically for the saved messages of the user. Notice [firebaseInstance] at the end of the useEffect. This is a dependency array that will make sure that the useEffect will run every time the firebaseInstance changes.
+    console.log('useEffect');
     if (firebaseInstance.auth().currentUser) {
       const savedMessagesRef = database.ref(`savedMessages/${firebaseInstance.auth().currentUser.uid}`);
       savedMessagesRef.on('value', (snapshot) => {
@@ -68,8 +70,9 @@ function Chat({ user, handleLogout, handleSignIn }) {
   const handleGetTemp = async (e) => {
     let apiKey = '31b40bbc1dd3415db1783017232602';
     try {
-      const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=28449&days=1&aqi=no&alerts=no`);
+      const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=28449&days=1&aqi=no&alerts=no`);
       const data = await response.json();
+      console.log(data);
       const temp = data.current.temp_f;
       console.log(temp);
       setNewMessage(temp);
@@ -111,7 +114,7 @@ function Chat({ user, handleLogout, handleSignIn }) {
                       className={
                         message.userId === firebaseInstance.auth().currentUser.uid
                           ?
-                          'flex absolute top-0 right-0 p-2 mb-2 text-white bg-green-600 border border-black rounded-lg '
+                          'flex absolute top-0 right-0 p-2 mb-4 text-white bg-green-600 border border-black rounded-lg '
                           :
                           'flex absolute top-0 left-0 p-2 mb-2 text-white bg-zinc-700 border border-black rounded-lg '
                       }
@@ -127,15 +130,22 @@ function Chat({ user, handleLogout, handleSignIn }) {
                       onClick={() => handleSaveMessage(message.id)}
                     >
                       <FaSave
-                        className="justify-center w-3 h-2 text-yellow-400 transition duration-150 ease-in-out transform hover:scale-150"
+                        className="justify-center w-6 h-6 p-6 text-yellow-400 transition duration-150 ease-in-out transform hover:scale-150"
                       />
                     </button>
+                    <button
+            type="button"
+            onClick={handleGetTemp}
+            className="p-2 m-1 SyntaxError: Unexpected identifier 'replaceCarriageReturns'. Expected an opening '(' before a function's parameter list.orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+          >
+            Get Temp
+          </button>
                     <button
                       className="m-2 inline-block rounded text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out "
                       onClick={() => handleDeleteMessage(message.id)}
                     >
                       <FaTrash
-                        className="justify-center w-3 h-2 text-red-400 transition duration-150 ease-in-out transform hover:scale-150"
+                        className="justify-center w-12 h-12 text-red-400 transition duration-150 ease-in-out transform hover:scale-150"
                       />
                     </button>
                   </div>
