@@ -42,8 +42,7 @@ function UserProfile() {
 
   return (
     <div className="text-white UserProfile bg-sky-600">
-      <Header fName={userProfile.name} />
-      <div className="flex justify-between p-4 bg-sky-500">
+            <div className="flex justify-between p-4 bg-sky-500">
       <h1>User Profile</h1>
       <p>Name: {userProfile.name}</p>
       <p>ID: {shortenUserId(userProfile.id)}</p>
@@ -54,9 +53,9 @@ function UserProfile() {
           <>
           <li key={message.id} className="p-4 p-6 m-2 rounded-md bg-sky-400">
             <p className="text-xl font-bold">{message.text}</p>
-            <p>User ID: {message.userId}</p>
+            <p>User ID: {shortenUserId(message.userId)}</p>
           </li>
-                      <p>{new Date(message.timestamp).toLocaleString()}</p>
+           <p>{new Date(message.timestamp).toLocaleString()}</p>
           </>
         ))}
       </ul>

@@ -19,9 +19,14 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
       </div>
       <div>
         <button
-          className="inline-flex px-4 py-2 font-bold text-white rounded flex-end bg-sky-400 hover:bg-sky-300"
+          className="inline-flex px-4 py-2 mx-2 font-bold text-white rounded flex-end bg-sky-400 hover:bg-sky-300"
           >
             <Link to="./">Chat</Link>
+          </button>
+        <button
+          className="inline-flex px-4 py-2 mx-2 font-bold text-white rounded flex-end bg-sky-400 hover:bg-sky-300"
+          >
+            <Link to="./profile">Profile</Link>
           </button>
         {user ? (
           <button

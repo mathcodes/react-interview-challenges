@@ -10,6 +10,7 @@ import Header from './Header';
 
 function Chat({ handleLogout, handleSignIn }) {
   const firebaseInstance = useContext(FirebaseContext);
+  console.log('firebaseInstance', firebaseInstance);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [savedMessages, setSavedMessages] = useState([]);
@@ -54,6 +55,7 @@ function Chat({ handleLogout, handleSignIn }) {
     messageRef.remove();
   };
 
+  // handleSaveMessage is  a function that saves a message to the database. Notice that we are using the same database.ref() method as we did in the useEffect() hook. This is because we are using the same database, but we are using a different path. The path we are using is savedMessages/${firebaseInstance.auth().currentUser.uid}. This path is a reference to the savedMessages node in the database. The ${firebaseInstance.auth().currentUser.uid} part of the path is a reference to the current user's id. This means that each user will have their own savedMessages node in the database. This is how we can save messages for each user. We are using the push() method to create a new message in the savedMessages node. We are then using the set() method to set the text, userId, and timestamp properties of the message. We are also using the setSavedMessages() hook to update the savedMessages state variable. This will cause the component to re-render and display the new saved message.
   const handleSaveMessage = (messageId) => {
     const message = messages.find((message) => message.id === messageId);
     const savedMessagesRef = database.ref(`savedMessages/${firebaseInstance.auth().currentUser.uid}`);
@@ -132,7 +134,6 @@ function Chat({ handleLogout, handleSignIn }) {
         <input className="m-2 bg-gray-300" type="text" value={newMessage} onChange={(event) => setNewMessage(event.target.value)} />
         <button type="submit">Send</button>
       </form>
-      <Link className="m-2 inline-block rounded bg-yellow-700 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]" to="/profile">PROFILE</Link>
     </div>
 
   );
