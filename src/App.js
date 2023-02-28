@@ -1,54 +1,52 @@
-import React, { useState, useContext } from 'react';
-import { firebase } from './firebase/firebase';
-import { FirebaseContext } from './index';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Main from './components/Main';
-import Chat from './components/Chat';
-import RecipeGrabber from './components/RecipeGrabber';
-import Header from './components/Header';
-import UserProfile from './components/UserProfile';
-import LoginPage from './components/LoginPage';
+import React from 'react';
 import './App.css';
 
-
 function App() {
-  const [user, setUser] = useState(null);
-  const [fName, setFName] = useState(null);
-  const firebaseInstance = useContext(FirebaseContext);
-
-  // Function to handle signing in with Google account
-  const handleSignIn = () => {
-    const provider = new firebaseInstance.auth.GoogleAuthProvider();
-    firebaseInstance.auth().signInWithPopup(provider);
-  };
-
-  // Function to handle signing out
-  const handleSignOut = () => {
-    firebaseInstance.auth().signOut();
-  };
-
-  // Listen for changes in user authentication state
-  firebaseInstance.auth().onAuthStateChanged((user) => {
-    setUser(user);
-  });
-
-
-
-
   return (
-    <Router>
-      <div
-          className="h-screen bg-gradient-to-r from-zinc-900 to-zinc-800"
-      >
-        <Header user={user} fName={fName} handleSignIn={handleSignIn} handleSignOut={handleSignOut} id={user ? user.uid : null} />
-        <Routes>
-          <Route path="/" element={user ? <Main /> : <LoginPage />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/recipes" element={<RecipeGrabber />} />
-          <Route path="/profile" element={user ? <UserProfile /> : <LoginPage />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="App">
+      <header>
+        <h1>My Website</h1>
+        <nav>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <section className="hero">
+          <h2>Welcome to My Website</h2>
+          <p>Here you can learn all about me and what I do.</p>
+        </section>
+        <section className="services">
+          <h2>My Services</h2>
+          <ul>
+            <li>Service 1</li>
+            <li>Service 2</li>
+            <li>Service 3</li>
+          </ul>
+        </section>
+        <section className="testimonials">
+          <h2>Testimonials</h2>
+          <ul>
+            <li>
+            <img src="https://www.jonchristie.net/favicon.png" alt="Testimonial" width="20%" className="w-10 h-10"/>
+              <blockquote>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat felis at leo maximus iaculis. Suspendisse fringilla orci vitae eros consequat laoreet."</blockquote>
+              <cite>John Doe</cite>
+            </li>
+            <li className="w-10 h-10">
+              <img src="https://www.jonchristie.net/favicon.png" alt="Testimonial" width="20%" className="w-10 h-10"/>
+              <blockquote>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat felis at leo maximus iaculis. Suspendisse fringilla orci vitae eros consequat laoreet."</blockquote>
+              <cite>Jane Smith</cite>
+            </li>
+          </ul>
+        </section>
+      </main>
+      <footer>
+        <p>&copy; 2021 My Website. All Rights Reserved.</p>
+      </footer>
+    </div>
   );
 }
 

@@ -1,42 +1,97 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* App.css */
 
-body{
-  background-color: #282c34;
+/* Default styles */
+
+.App {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 20px 0;
+  border-bottom: 1px solid #ccc;
 }
 
-.App-link {
-  color: #61dafb;
+nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+nav li {
+  margin-left: 20px;
 }
+
+main {
+  padding: 20px 0;
+}
+
+section h2 {
+  margin-bottom: 10px;
+}
+
+.services ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.services li {
+  flex: 0 0 calc(33.333% - 10px);
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+ /* App.css - continued */
+
+/* Media queries */
+
+/* Mobile */
+@media only screen and (max-width: 600px) {
+  header {
+  flex-direction: column;
+  align-items: flex-start;
+  }
+
+  nav {
+  order: 2;
+  width: 100%;
+  }
+
+  nav ul {
+  flex-direction: column;
+  }
+
+  nav li {
+  margin: 10px 0;
+  }
+
+  .hero {
+  text-align: center;
+  }
+
+  .services li {
+  flex: 0 0 100%;
+  }
+  }
+
+  /* Tablet */
+  @media only screen and (min-width: 601px) and (max-width: 900px) {
+  .services li {
+  flex: 0 0 calc(50% - 10px);
+  }
+  }
+
+  /* Desktop */
+  @media only screen and (min-width: 901px) {
+  .services li {
+  flex: 0 0 calc(33.333% - 10px);
+  }
+  }
