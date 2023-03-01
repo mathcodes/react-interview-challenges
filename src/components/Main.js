@@ -4,6 +4,7 @@ import { GiMeal } from 'react-icons/gi'
 
 
 export default function Main() {
+
   return (
 <div class="text-white container">
 
@@ -13,6 +14,7 @@ export default function Main() {
       <p><GiMeal />
       This app utilizes Tailwind CSS, React, Firebase, and some 3rd-party APIs to create a recipe search engine. Users can search for recipes by ingredient, and save recipes to their
       </p>
+      <div id="SAMPLEdivID"></div>
    </div>
   </div>
   )
