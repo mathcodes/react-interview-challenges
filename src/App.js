@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import ButtonPanel from './components/ButtonPanel';
+import LandingPage from './components/LandingPage';
 
 function App() {
   return (
@@ -19,13 +21,9 @@ function App() {
           <h2>Welcome to My Website</h2>
           <p>Here you can learn all about me and what I do.</p>
         </section>
-        <section className="services">
-          <h2>My Services</h2>
-          <ul>
-            <li>Service 1</li>
-            <li>Service 2</li>
-            <li>Service 3</li>
-          </ul>
+        <section>
+          <LandingPage />
+          <ButtonPanel />
         </section>
         <section className="testimonials">
           <h2>Testimonials</h2>
