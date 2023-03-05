@@ -85,8 +85,8 @@ function Chat() {
 
 
 
-  const currentUserMessages = messages.filter((message) => message.userId === firebase.auth().currentUser.uid);
-  const incomingMessages = messages.filter((message) => message.userId !== firebase.auth().currentUser.uid);
+  const currentUserMessages = messages.filter((message) => message.userId === firebase.auth().currentUser);
+  const incomingMessages = messages.filter((message) => message.userId !== firebase.auth().currentUser);
   const sortedMessages = messages.sort((a, b) => b.timestamp - a.timestamp);
 
 
@@ -112,7 +112,7 @@ function Chat() {
                   <div key={message.id} className="relative p-2 ">
                     <div
                       className={
-                        message.userId === firebase.auth().currentUser.uid
+                        message.userId === firebase.auth().currentUser
                           ?
                           'flex absolute top-0 right-0 p-2 mb-2 text-white bg-green-600 border border-black rounded-lg '
                           :

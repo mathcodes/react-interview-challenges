@@ -37,7 +37,12 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
         <button
           className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
         >
-          <Link to="./profile">Profile</Link>
+          <Link to="./profile">
+
+          {user ? 'Profile'  : '(login)'}
+
+
+            </Link>
         </button>
         <button
                   className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
