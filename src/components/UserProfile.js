@@ -132,18 +132,18 @@ function UserProfile({ user, handleLogout, handleSignIn }) {
     database.ref(`savedRecipes/${firebase.auth().currentUser.uid}/${recipeId}`).set(savedRecipe);
 
   }
-  const handleFavoriteRecipe = (recipeId) => {
-    console.log('recipes', recipes);
-    console.log('recipeId', recipeId);
-    const recipe = recipes.find((r) => r.id === recipeId);
-    console.log('recipe', recipe);
-    const favoriteRecipe = {
-      recipeId: recipe.id,
-      favorite: true,
-    };
-    console.log('favoriteRecipe', favoriteRecipe);
-    database.ref(`savedRecipes/${firebase.auth().currentUser.uid}/${recipeId}`).set(favoriteRecipe);
-  }
+  // const handleFavoriteRecipe = (recipeId) => {
+  //   console.log('recipes', recipes);
+  //   console.log('recipeId', recipeId);
+  //   const recipe = recipes.find((r) => r.id === recipeId);
+  //   console.log('recipe', recipe);
+  //   const favoriteRecipe = {
+  //     recipeId: recipe.id,
+  //     favorite: true,
+  //   };
+  //   console.log('favoriteRecipe', favoriteRecipe);
+  //   database.ref(`savedRecipes/${firebase.auth().currentUser.uid}/${recipeId}`).set(favoriteRecipe);
+  // }
 
 
 
@@ -165,7 +165,7 @@ function UserProfile({ user, handleLogout, handleSignIn }) {
       <h1 className="text-4xl font-bold">
         Welcome to your profile page, <span className="text-blue-500 hover:text-blue-700">{user.displayName}</span>
       </h1>
-      <div className="flex flex-row text-center">
+      <div className="flex flex-row items-start text-center">
         {/* SAVED MESSAGES */}
         <div className="flex flex-col items-center flex-1 text-center">
           <h1 className="my-10 text-2xl font-bold ">
@@ -176,7 +176,7 @@ function UserProfile({ user, handleLogout, handleSignIn }) {
               {savedMessages.map((message) => (
                 <div className="flex items-center justify-between flex-1 w-full p-1 m-3 text-white rounded px-4text-center bg-zinc-500 ">
                   {message.text}
-                  <button className="flex items-center justify-center pl-6 text-center text-red-400 hover:text-red-600" onClick={() => handleDeleteMessage(message.id)}>
+                  <button className="flex items-center justify-center text-2xl text-center text-red-400 hover:text-red-600" onClick={() => handleDeleteMessage(message.id)}>
                     <FaRegTrashAlt />
                   </button>
 
@@ -193,22 +193,30 @@ function UserProfile({ user, handleLogout, handleSignIn }) {
           <div className="flex items-center justify-center flex-1 w-full px-20 text-center rounded bg-zinc-800">
             <div className="flex flex-col items-center justify-between flex-1 w-full p-5 text-center rounded bg-zinc-700">
               {savedRecipes.map((recipe) => (
-                <div className="flex items-center justify-between flex-1 w-full p-1 m-3 text-white rounded px-4text-center bg-zinc-500 ">
-                  {recipe.title}
-                  <button className="flex items-center justify-center pl-6 text-center text-red-400 hover:text-red-600" onClick={() => handleDeleteRecipe(recipe.id)}>
-                    <FaRegTrashAlt />
-                  </button>
-                  <button className="flex items-center justify-center pl-6 text-center text-red-400 hover:text-red-600" onClick={() => handleFavoriteRecipe(recipe.id)}>
-                    <FaRegHeart />
-                  </button>
+                // make a div that create an image of the recipe as theh top part of a card:
+                <div className="flex flex-col items-center justify-between flex-1 w-full p-5 text-center rounded bg-zinc-700">
+                  <div className="flex items-center justify-between flex-1 w-full p-1 m-3 text-white rounded px-4text-center bg-zinc-500 ">
+                    <div className="flex flex-col items-center justify-between flex-1 w-full p-5 text-center rounded bg-zinc-700">
+                      <img src={recipe.image} alt={recipe.title} />
+                      <h2>{recipe.title}</h2>
+                      <p>{recipe.description}</p>
+                      <div className="flex flex-row items-center justify-around flex-1 w-full p-5 text-center rounded bg-zinc-700">
+                      <button className="flex items-center justify-center text-2xl text-center text-red-400 hover:text-red-600" onClick={() => handleDeleteRecipe(recipe.id)}>
+                        <FaRegTrashAlt />
+                      </button>
+                      {/* <button className="flex items-center justify-center pl-6 text-center text-red-400 hover:text-red-600" onClick={() => handleFavoriteRecipe(recipe.id)}>
+                        <FaRegHeart />
+                      </button> */}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-
       </div>
-      </div>
+    </div>
   );
 }
 
