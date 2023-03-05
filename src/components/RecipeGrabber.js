@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
-import { FirebaseContext } from '../index';
+import { FirebaseContext } from '../firebase/index';
 import { database } from '../firebase/firebase';
+import { firebase } from '../firebase/firebase';
 
 const RecipeGrabber = () => {
-  const firebaseInstance = useContext(FirebaseContext);
   // const { firebase, savedRecipes } = useContext(FirebaseContext);
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [tags, setTags] = useState([]);
@@ -43,8 +43,8 @@ const RecipeGrabber = () => {
 
   const handleSaveRecipe = (recipe) => {
     console.log('save recipe', recipe);
-    if (firebaseInstance.auth().currentUser) {
-      const savedRecipesRef = database.ref(`savedRecipes/${firebaseInstance.auth().currentUser.uid}`);
+    if (firebase.auth().currentUser) {
+      const savedRecipesRef = database.ref(`savedRecipes/${firebase.auth().currentUser.uid}`);
       const newSavedRecipeRef = savedRecipesRef.push();
       newSavedRecipeRef.set({ ...recipe, rating: rating, favorite: true });
     }
@@ -54,16 +54,16 @@ const RecipeGrabber = () => {
 
   const handleDeleteRecipe = (recipeId) => {
     console.log('delete recipe', recipeId);
-    if (firebaseInstance.auth().currentUser) {
-      const savedRecipeRef = database.ref(`savedRecipes/${firebaseInstance.auth().currentUser.uid}/${recipeId}`);
+    if (firebase.auth().currentUser) {
+      const savedRecipeRef = database.ref(`savedRecipes/${firebase.auth().currentUser.uid}/${recipeId}`);
       savedRecipeRef.remove();
     }
   };
 
   const handleRating = (recipeId, ratingValue) => {
     console.log('rating', recipeId, ratingValue);
-    if (firebaseInstance.auth().currentUser) {
-      const savedRecipeRef = database.ref(`savedRecipes/${firebaseInstance.auth().currentUser.uid}/${recipeId}`);
+    if (firebase.auth().currentUser) {
+      const savedRecipeRef = database.ref(`savedRecipes/${firebase.auth().currentUser.uid}/${recipeId}`);
       savedRecipeRef.update({ rating: ratingValue });
     }
   };
@@ -129,7 +129,7 @@ const RecipeGrabber = () => {
                 </span>
               </div>
               <div>
-                {firebaseInstance.auth().currentUser && savedRecipes && savedRecipes.find((r) => r.id === recipe.id) ? (
+                {firebase.auth().currentUser && savedRecipes && savedRecipes.find((r) => r.id === recipe.id) ? (
                   <FaHeart
                     className="text-red-500 cursor-pointer"
                     onClick={() => handleDeleteRecipe(recipe.id)}

@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { firebase } from './firebase/firebase';
-import { FirebaseContext } from './index';
+import { FirebaseContext } from './firebase/index';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Main from './components/Main';
 import Chat from './components/Chat';
+import Weather from './components/Weather';
 import RecipeGrabber from './components/RecipeGrabber';
 import Header from './components/Header';
 import UserProfile from './components/UserProfile';
@@ -24,11 +25,11 @@ function App() {
 
   // Function to handle signing out
   const handleSignOut = () => {
-    firebaseInstance.auth().signOut();
+    firebase.auth().signOut();
   };
 
   // Listen for changes in user authentication state
-  firebaseInstance.auth().onAuthStateChanged((user) => {
+  firebase.auth().onAuthStateChanged((user) => {
     setUser(user);
   });
 
@@ -45,7 +46,8 @@ function App() {
           <Route path="/" element={user ? <Main /> : <LoginPage />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/recipes" element={<RecipeGrabber />} />
-          <Route path="/profile" element={user ? <UserProfile /> : <LoginPage />} />
+          <Route path="/weather" element={<Weather />} />
+          <Route path="/profile" element={user ? <UserProfile  user={user} handleLogout={handleSignOut} /> : <LoginPage />} />
         </Routes>
       </div>
     </Router>

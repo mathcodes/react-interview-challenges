@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { FirebaseContext } from '../index';
+import { FirebaseContext } from '../firebase/index';
+import Main from './Main';
 
 function LoginPage() {
   const [error, setError] = useState(null);
@@ -16,7 +17,7 @@ function LoginPage() {
 
   return (
     <div>
-      <h1>Please sign in to continue.</h1>
+      <Main handle={handleSignInWithGoogle} />
       <button onClick={handleSignInWithGoogle}>Sign in with Google</button>
       {error && <p>{error}</p>}
     </div>

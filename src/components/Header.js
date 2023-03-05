@@ -14,33 +14,38 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
       <div className="inline-flex">
         <h1
           className="text-2xl font-bold text-white"
-        >Chat App</h1>
-<div>{fName}</div>
+        >jCircle9</h1>
+        <div>{fName}</div>
       </div>
       <div>
         <button
-            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-            >
-            <Link to="./chat">Chat</Link>
-          </button>
+          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+        >
+          <Link to="./chat">Chat</Link>
+        </button>
         <button
-            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-            >
-            <Link to="./recipes">Recipes</Link>
-          </button>
+          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+        >
+          <Link to="./recipes">Recipes</Link>
+        </button>
         <button
-            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-            >
-            <Link to="./profile">Profile</Link>
-          </button>
+          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+        >
+          <Link to="./weather">Weather</Link>
+        </button>
+        <button
+          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+        >
+          <Link to="./profile">Profile</Link>
+        </button>
         {user ? (
           <button
-          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-          onClick={handleSignOut}>Logout</button>
+            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+            onClick={handleSignOut}>Logout</button>
         ) : (
           <button
-          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-          onClick={handleSignIn}>Login</button>
+            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+            onClick={handleSignIn}>Login</button>
         )}
       </div>
     </header>

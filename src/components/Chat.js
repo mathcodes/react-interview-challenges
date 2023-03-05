@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { FirebaseContext } from '../index';
+import { firebase } from '../firebase/firebase';
 import { database } from '../firebase/firebase';
 
 // import save icon
@@ -9,8 +9,8 @@ import { Link } from 'react-router-dom';
 import Header from './Header';
 // import './Chat.css';
 
-function Chat({ user, handleLogout, handleSignIn }) {
-  const firebaseInstance = useContext(FirebaseContext);
+function Chat() {
+  // const firebase = useContext(FirebaseContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [savedMessages, setSavedMessages] = useState([]);
@@ -31,10 +31,10 @@ function Chat({ user, handleLogout, handleSignIn }) {
     });
   }, []);
 
-  useEffect(() => { // this useEffect is a listener that will listen for changes in the database every time the user logs in, and specifically for the saved messages of the user. Notice [firebaseInstance] at the end of the useEffect. This is a dependency array that will make sure that the useEffect will run every time the firebaseInstance changes.
+  useEffect(() => { // this useEffect is a listener that will listen for changes in the database every time the user logs in, and specifically for the saved messages of the user. Notice [firebase] at the end of the useEffect. This is a dependency array that will make sure that the useEffect will run every time the firebase changes.
     console.log('useEffect');
-    if (firebaseInstance.auth().currentUser) {
-      const savedMessagesRef = database.ref(`savedMessages/${firebaseInstance.auth().currentUser.uid}`);
+    if (firebase.auth().currentUser) {
+      const savedMessagesRef = database.ref(`savedMessages/${firebase.auth().currentUser.uid}`);
       savedMessagesRef.on('value', (snapshot) => {
         const savedMessagesData = snapshot.val();
         if (savedMessagesData) {
@@ -45,12 +45,12 @@ function Chat({ user, handleLogout, handleSignIn }) {
         }
       });
     }
-  }, [firebaseInstance]);
+  }, [firebase]);
 
   const handleSendMessage = (event) => {
     event.preventDefault();
     const messagesRef = database.ref('messages');
-    messagesRef.push({ text: newMessage, userId: firebaseInstance.auth().currentUser.uid, timestamp: Date.now() });
+    messagesRef.push({ text: newMessage, userId: firebase.auth().currentUser.uid, timestamp: Date.now() });
     setNewMessage('');
   };
 
@@ -61,7 +61,7 @@ function Chat({ user, handleLogout, handleSignIn }) {
 
   const handleSaveMessage = (messageId) => {
     const message = messages.find((message) => message.id === messageId);
-    const savedMessagesRef = database.ref(`savedMessages/${firebaseInstance.auth().currentUser.uid}`);
+    const savedMessagesRef = database.ref(`savedMessages/${firebase.auth().currentUser.uid}`);
     const newSavedMessageRef = savedMessagesRef.push();
     newSavedMessageRef.set({ text: message.text, userId: message.userId, timestamp: message.timestamp });
     setSavedMessages((prevSavedMessages) => [...prevSavedMessages, { id: newSavedMessageRef.key, ...message }]);
@@ -85,8 +85,8 @@ function Chat({ user, handleLogout, handleSignIn }) {
 
 
 
-  const currentUserMessages = messages.filter((message) => message.userId === firebaseInstance.auth().currentUser.uid);
-  const incomingMessages = messages.filter((message) => message.userId !== firebaseInstance.auth().currentUser.uid);
+  const currentUserMessages = messages.filter((message) => message.userId === firebase.auth().currentUser.uid);
+  const incomingMessages = messages.filter((message) => message.userId !== firebase.auth().currentUser.uid);
   const sortedMessages = messages.sort((a, b) => b.timestamp - a.timestamp);
 
 
@@ -112,7 +112,7 @@ function Chat({ user, handleLogout, handleSignIn }) {
                   <div key={message.id} className="relative p-2 ">
                     <div
                       className={
-                        message.userId === firebaseInstance.auth().currentUser.uid
+                        message.userId === firebase.auth().currentUser.uid
                           ?
                           'flex absolute top-0 right-0 p-2 mb-2 text-white bg-green-600 border border-black rounded-lg '
                           :
@@ -162,33 +162,7 @@ function Chat({ user, handleLogout, handleSignIn }) {
           type="submit">Send</button>
       </form>
 
-      <div className="flex flex-col items-center w-full h-full">
-        <h1 className="text-2xl font-bold text-center">Utilities</h1>
-        <div className="flex flex-row justify-between w-2/3">
-          <button
-            type="button"
-            onClick={handleGetTemp}
-            className="p-2 m-1 SyntaxError: Unexpected identifier 'replaceCarriageReturns'. Expected an opening '(' before a function's parameter list.orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-          >
-            Get Temp
-          </button>
-          <button
-            type="button"
-            onClick={handleGetTemp}
-            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-          >
-            Get Temp
-          </button>
-          <button
-            type="button"
-            onClick={handleGetTemp}
-            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-          >
-            Get Temp
-          </button>
 
-        </div>
-      </div>
     </div>
 
   );

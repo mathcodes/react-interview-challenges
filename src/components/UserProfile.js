@@ -1,127 +1,144 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { FirebaseContext } from '../index';
+import { firebase } from '../firebase/firebase';
 import { database } from '../firebase/firebase';
+import { FirebaseContext } from '../firebase/index';
 import Header from './Header';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { FaRegWindowClose } from 'react-icons/fa';
 
-function UserProfile() {
-  const { messages, savedMessages, handleDeleteMessage, handleSaveMessage } = useContext(FirebaseContext);
-  const firebaseInstance = useContext(FirebaseContext);
-  const [userProfile, setUserProfile] = useState({ name: '', id: '', credentials: null, savedMessages: [], savedRecipes: [] });
 
-  // Function that changes the user ids into the first five characters of the user id
-  const shortenUserId = (userId) => {
-    return userId.slice(0, 5);
-  };
+function UserProfile({ user, handleLogout, handleSignIn }) {
+  console.log('user', user);
+  console.log('handleLogout', handleLogout);
+  console.log('handleSignIn', handleSignIn);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [savedMessages, setSavedMessages] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [savedRecipes, setSavedRecipes] = useState([]);
+  const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    if (firebaseInstance.auth().currentUser) {
-      const currentUser = firebaseInstance.auth().currentUser;
-      const userProfile = {
-        name: currentUser.displayName,
-        id: currentUser.uid,
-        credentials: currentUser.providerData,
-        savedMessages: [],
-        savedRecipes: [],
-      };
-      setUserProfile(userProfile);
+    console.log('useEffect');
+    const messagesRef = database.ref('messages');
+    messagesRef.on('value', (snapshot) => {
+      const messagesData = snapshot.val();
+      if (messagesData) {
+        const messages = Object.entries(messagesData).map(([key, value]) => {
+          return { id: key, ...value };
+        });
+        setMessages(messages);
+      }
+    });
+  }
+    , []);
 
-      const savedMessagesRef = database.ref(`savedMessages/${currentUser.uid}`);
+  useEffect(() => {
+    console.log('useEffect');
+    if (firebase.auth().currentUser) {
+      const savedMessagesRef = database.ref(`savedMessages/${firebase.auth().currentUser.uid}`);
       savedMessagesRef.on('value', (snapshot) => {
         const savedMessagesData = snapshot.val();
         if (savedMessagesData) {
           const savedMessages = Object.entries(savedMessagesData).map(([key, value]) => {
             return { id: key, ...value };
           });
-          setUserProfile((prevUserProfile) => ({
-            ...prevUserProfile,
-            savedMessages: savedMessages,
-          }));
+          setSavedMessages(savedMessages);
         }
       });
+    }
+  }
+    , [firebase]);
 
-      const savedRecipesRef = database.ref(`savedRecipes/${currentUser.uid}`);
+  useEffect(() => {
+    console.log('useEffect');
+    if (firebase.auth().currentUser) {
+      const savedRecipesRef = database.ref(`savedRecipes/${firebase.auth().currentUser.uid}`);
       savedRecipesRef.on('value', (snapshot) => {
         const savedRecipesData = snapshot.val();
         if (savedRecipesData) {
           const savedRecipes = Object.entries(savedRecipesData).map(([key, value]) => {
             return { id: key, ...value };
           });
-          setUserProfile((prevUserProfile) => ({
-            ...prevUserProfile,
-            savedRecipes: savedRecipes,
-          }));
+          setSavedRecipes(savedRecipes);
         }
-      }
-      );
-
+      });
     }
-  }, [firebaseInstance]);
+  }
+    , [firebase]);
 
-  const handleDeleteRecipe = (recipeId) => {
-    const recipeRef = database.ref(`savedRecipes/${userProfile.id}/${recipeId}`);
-    recipeRef.remove();
-  };
+  const handleSaveMessage = (messageId) => {
+    console.log('save message', messageId);
+    const message = messages.find((message) => message.id === messageId);
+    const savedMessage = {
+      ...message,
+      saved: true,
+    };
+    database.ref(`savedMessages/${firebase.auth().currentUser.uid}/${messageId}`).set(savedMessage);
+  }
+
+  const handleDeleteMessage = (messageId) => {
+    console.log('delete message', messageId);
+    database.ref(`savedMessages/${firebase.auth().currentUser.uid}/${messageId}`).remove();
+  }
 
   const handleSaveRecipe = (recipeId) => {
-    const recipe = messages.find((recipe) => recipe.id === recipeId);
-    const savedRecipesRef = database.ref(`savedRecipes/${userProfile.id}`);
-    const newSavedRecipeRef = savedRecipesRef.push();
-    newSavedRecipeRef.set({ text: recipe.text, userId: recipe.userId, timestamp: recipe.timestamp });
-    setUserProfile((prevUserProfile) => ({
-      ...prevUserProfile,
-      savedRecipes: [...prevUserProfile.savedRecipes, { id: newSavedRecipeRef.key, ...recipe }],
-    }));
-  };
+    console.log('save recipe', recipeId);
+    const recipe = recipes.find((recipe) => recipe.id === recipeId);
+    const savedRecipe = {
+      ...recipe,
+      saved: true,
+    };
+    database.ref(`savedRecipes/${firebase.auth().currentUser.uid}/${recipeId}`).set(savedRecipe);
+  }
 
-
-
-
+  const handleDeleteRecipe = (recipeId) => {
+    console.log('delete recipe', recipeId);
+    database.ref(`savedRecipes/${firebase.auth().currentUser.uid}/${recipeId}`).remove();
+  }
 
   return (
-    <div className="text-white UserProfile bg-zinc-800">
-      <div
-      className="flex flex-col justify-center p-4 rounded-md bg-zinc-800"
-      >
-        <div className="flex flex-row justify-between p-4 rounded-md bg-zinc-500">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 text-white">
+      <div className="flex flex-col items-center justify-center flex-1 w-full px-20 text-center">
+        <h1 className="text-6xl font-bold">
+          Welcome to your profile page, {user.displayName}!
+        </h1>
+        <div className="flex flex-row items-center justify-center flex-1 w-full px-20 text-center">
+          <div className="flex flex-col items-center justify-center flex-1 w-full px-20 text-center">
+            <h1 className="text-4xl font-bold">
+              Saved Messages
+            </h1>
+            <div className="flex items-center justify-center flex-1 w-full px-20 text-center rounded bg-zinc-800">
+              <div className="flex flex-col items-center justify-between flex-1 w-full p-5 text-center rounded bg-zinc-700">
+                {savedMessages.map((message) => (
+                  <div className="flex items-center justify-between flex-1 w-full p-1 m-3 text-white rounded px-4text-center bg-zinc-500 ">
+                    {message.text}
 
-        <h1>User Profile</h1>
-        <p>Name: {userProfile.name}</p>
-        <p>ID: {shortenUserId(userProfile.id)}</p>
-      </div>
-      </div>
-      <div className="flex flex-row justify-between p-4 rounded-md bg-zinc-800">
-        <div className="flex justify-between w-1/2 p-4 rounded-md bg-zinc-800">
-          <ul>
-            {userProfile.savedMessages.map((message) => (
-              <>
-                <li key={message.id} className="p-4 p-6 m-2 bg-green-900 rounded-md">
-                  <p className="text-xl font-bold">{message.text}</p>
-                  <p
-                  className="text-xs "
-                  >User ID: {shortenUserId(message.userId)}</p>
-                </li>
-                <p className="pl-5 text-xs"
-                >{new Date(message.timestamp).toLocaleString()}</p>
-              </>
-            ))}
-          </ul>
-        </div>
-        <div className="flex justify-between w-1/2 p-4 rounded-md bg-zinc-800">
-          <ul>
-            {userProfile.savedRecipes.map((recipe) => (
-              <>
-                <li key={recipe.id} className="p-4 p-6 m-2 rounded-md bg-zinc-800">
-                  <p className="text-xl font-bold">{recipe.title}</p>
-                  <p>Recipe ID: {(recipe.recipeId)}</p>
-                  <img src={recipe.image} alt={recipe.title} />
-                  <button onClick={() => handleSaveRecipe(recipe)}>Save</button>
-                  <button onClick={() => handleDeleteRecipe(recipe.id)}>Delete</button>
-                </li>
-                <p>{new Date(recipe.timestamp).toLocaleString()}</p>
-              </>
-            ))}
-          </ul>
-
+                    <button className="flex items-center justify-center pl-6 text-center " onClick={() => handleDeleteMessage(message.id)}>
+                      <FaRegTrashAlt />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col items-center justify-center flex-1 w-full px-20 text-center">
+            <h1 className="text-4xl font-bold">
+              Saved Recipes
+            </h1>
+            <div className="flex flex-row items-center justify-center flex-1 w-full px-20 text-center">
+              <div className="flex flex-col items-center justify-center flex-1 w-full px-20 text-center">
+                {savedRecipes.map((recipe) => (
+                  <div className="flex flex-row items-center justify-center flex-1 w-full px-20 text-center">
+                    {recipe.text}
+                    <button className="flex flex-row items-center justify-center flex-1 w-full px-20 text-center" onClick={() => handleDeleteRecipe(recipe.id)}>
+                      <FaRegTrashAlt />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -129,3 +146,4 @@ function UserProfile() {
 }
 
 export default UserProfile;
+
