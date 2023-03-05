@@ -20,35 +20,38 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
       </div>
       <div>
         <button
-          className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
+          className="p-2 ml-4 border rounded-md text-violet-600 text-md bg-zinc-200 border-zinc-400 hover:border-white hover:scale-125"
         >
-          <Link to="./chat">Chat</Link>
+          <Link to="./chat">
+            {user ? 'Chat' : '💬'}
+          </Link>
         </button>
         <button
-          className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
+          className="p-2 ml-4 border rounded-md text-violet-600 text-md bg-zinc-200 border-zinc-400 hover:border-white hover:scale-125"
         >
-          <Link to="./recipes">Recipes</Link>
+          <Link to="./recipes">
+            {user ? 'Recipes' : '🍽️'}
+          </Link>
         </button>
         <button
-          className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
+          className="p-2 ml-4 border rounded-md text-violet-600 text-md bg-zinc-200 border-zinc-400 hover:border-white hover:scale-125"
         >
-          <Link to="./weather">Weather</Link>
+          <Link to="./weather">
+          {user ? 'Weather'  : '☁️'}
+          </Link>
         </button>
         <button
-          className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
+          className="p-2 ml-4 border rounded-md text-violet-600 text-md bg-zinc-200 border-zinc-400 hover:border-white hover:scale-125"
         >
           <Link to="./profile">
-
-          {user ? 'Profile'  : '(login)'}
-
-
-            </Link>
+            {user ? 'Settings' : '🔧'}
+          </Link>
         </button>
         <button
-                  className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
+          className="p-2 mx-4 border rounded-md bg-violet-600 text-md text-zinc-800 border-zinc-400 hover:text-white hover:border-white hover:scale-125"
 
         >
-        <LoginButton user={user} handleSignIn={handleSignIn} handleSignOut={handleSignOut} />
+          <LoginButton user={user} handleSignIn={handleSignIn} handleSignOut={handleSignOut} />
         </button>
       </div>
     </header>

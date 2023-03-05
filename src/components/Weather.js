@@ -90,38 +90,60 @@ export default function Weather() {
               <div className="weather card header text">
                 <h1 className="pt-10 text-4xl font-bold text-center text-white">Weather</h1>
               </div>
-              <div className="weather facts">
+              <div className="flex flex-row weather facts justify around">
                 <div
-                  className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700" onClick={handleGetTemp}
+                  className="p-2 m-1 border rounded-md text-violet-400 text-md bg-zinc-800 border-zinc-400 hover:border-violet-600" onClick={handleGetTemp}
                 >
-                  Temperature: {temp}
+                  Temperature:
                 </div>
+                <div
+                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600" onClick={handleGetPrecipitation}
+                >
+                  {temp}
               </div>
-              <div className="weather facts">
+              <div className="flex flex-row weather facts justify around">
                 <div
-                  className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700" onClick={handleGetWind}
+                  className="p-2 m-1 text-pink-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600" onClick={handleGetWind}
                 >
-                  Wind Speed: {wind}
+                  Wind Speed:
                 </div>
+                <div
+                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600" onClick={handleGetPrecipitation}
+                >
+                  {wind}
               </div>
-              <div className="weather facts">
+              <div className="flex flex-row weather facts justify around">
                 <div
-                  className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700" onClick={handleGetHumidity}
-                >
-                  Humidity: {humidity}
+                  className="p-2 m-1 text-orange-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600" onClick={handleGetHumidity}
+                  >
+                  Humidity:
                 </div>
+                <div
+                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600" onClick={handleGetPrecipitation}
+                >
+                  {humidity}
               </div>
-              <div className="weather facts">
+              <div className="flex flex-row weather facts justify around">
                 <div
-                  className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700" onClick={handleGetPrecipitation}
+                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600" onClick={handleGetPrecipitation}
                 >
-                  Precipitation: {precipitation}
+                  Precipitation:
                 </div>
+                <div
+                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600" onClick={handleGetPrecipitation}
+                >
+                  {precipitation}
+              </div>
               </div>
             </div>
           </div>
         </div>
+        </div>
+      </div>
+      </div>
       </div>
     </div>
   );
 }
+
+

@@ -18,7 +18,6 @@ function LoginPage() {
   return (
     <div>
       <Main handle={handleSignInWithGoogle} />
-      <button onClick={handleSignInWithGoogle}>Sign in with Google</button>
       {error && <p>{error}</p>}
     </div>
   );

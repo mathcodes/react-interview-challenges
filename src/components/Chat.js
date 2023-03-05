@@ -157,7 +157,7 @@ function Chat() {
           onChange={(event) => setNewMessage(event.target.value)}
         />
         <button
-            className="w-3/12 p-3 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+            className="w-3/12 p-3 text-violet-600 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600"
 
           type="submit">Send</button>
       </form>
