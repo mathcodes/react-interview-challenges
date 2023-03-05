@@ -8,7 +8,7 @@ export const FirebaseContext = createContext();
 export const FirebaseProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [savedMessages, setSavedMessages] = useState([]);
-
+  const favoriteRecipes = [];
   useEffect(() => {
     const messagesRef = firebase.database().ref('messages');
     messagesRef.on('value', (snapshot) => {

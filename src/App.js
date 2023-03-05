@@ -39,7 +39,7 @@ function App() {
   return (
     <Router>
       <div
-          className="h-screen bg-gradient-to-r from-zinc-900 to-zinc-800"
+          className="container h-screen bg-gradient-to-r from-zinc-900 to-zinc-800"
       >
         <Header user={user} fName={fName} handleSignIn={handleSignIn} handleSignOut={handleSignOut} id={user ? user.uid : null} />
         <Routes>
