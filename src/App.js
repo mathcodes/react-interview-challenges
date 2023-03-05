@@ -40,7 +40,7 @@ function App() {
   return (
     <Router>
       <div
-          className="container flex flex-col min-h-screen bg-gradient-to-t from-zinc-900 to-zinc-300"
+          className="container flex flex-col min-h-screen mx-auto bg-gradient-to-t from-zinc-900 to-zinc-300"
       >
         <Header user={user} fName={fName} handleSignIn={handleSignIn} handleSignOut={handleSignOut} id={user ? user.uid : null} />
         <Routes>
@@ -51,10 +51,8 @@ function App() {
           <Route path="/profile" element={user ? <UserProfile  user={user} handleLogout={handleSignOut} /> : <LoginPage />} />
         </Routes>
       </div>
-{/* wrap fotter in div that makes it always on botto fo page */}
-      <div className="container flex flex-col justify-end w-full h-screen">
         <Footer />
-      </div>
+{/* wrap fotter in div that makes it always on botto fo page */}
     </Router>
   );
 }

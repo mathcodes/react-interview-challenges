@@ -6,12 +6,8 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
 
 
 
-  const goBack = () => {
-    window.history.back();
-  };
-
   return (
-    <header className="flex flex-row justify-between py-4 pl-4 pr-0.5 border-b-2 bg-zinc-800 border-zinc-400">
+    <header className="flex flex-row justify-between py-4 pl-4 pr-0.5 border-b-2 bg-zinc-800 border-zinc-400 shadow-2xl ">
       <div className="inline-flex">
         <h1
           className="text-2xl font-bold text-white"
