@@ -161,17 +161,17 @@ function UserProfile({ user, handleLogout, handleSignIn }) {
 
 
   return (
-    <div className="container flex flex-col py-2 mx-auto text-white m-h-screen bg-zinc-900">
-      <h1 className="text-4xl font-bold">
+    <div className="container flex flex-col h-full py-2 mx-auto text-white bg-zinc-900 min-h-100">
+      <h1 className="h-full font-bold text-md md:text-2xl lg:text-4xl ">
         Welcome to your profile page, <span className="text-blue-500 hover:text-blue-700">{user.displayName}</span>
       </h1>
-      <div className="flex flex-row items-start text-center">
+      <div className="flex flex-col items-start h-full text-center md:flex-row">
         {/* SAVED MESSAGES */}
-        <div className="flex flex-col items-center flex-1 text-center">
+        <div className="flex flex-col items-center justify-center flex-1 w-full h-full px-20 text-center ">
           <h1 className="my-10 text-2xl font-bold ">
             Saved Messages
           </h1>
-          <div className="flex items-center justify-center flex-1 w-full px-20 text-center rounded bg-zinc-800">
+          <div className="flex items-center justify-center flex-1 w-full px-0 text-center rounded xl:px-20 bg-zinc-800">
             <div className="flex flex-col items-center justify-between flex-1 w-full p-5 overflow-y-auto text-center rounded h-96 bg-zinc-700">
               {savedMessages.map((message) => (
                 <div className="flex items-center justify-between flex-1 w-full p-1 m-3 text-white rounded px-4text-center bg-zinc-500 ">
@@ -186,12 +186,12 @@ function UserProfile({ user, handleLogout, handleSignIn }) {
           </div>
         </div>
         {/* SAVED RECIPES */}
-      <div className="flex flex-col items-center justify-center flex-1 w-full h-full px-20 text-center">
+      <div className="flex flex-col items-center justify-center flex-1 w-full h-full px-20 text-center ">
           <h1 className="my-10 text-2xl font-bold ">
             Saved Recipes
           </h1>
-          <div className="flex items-center justify-center flex-1 w-full px-20 text-center rounded bg-zinc-800">
-          <div className="flex flex-col items-center justify-between flex-1 w-full p-5 overflow-y-auto text-center rounded h-96 bg-zinc-700">
+          <div className="flex items-center justify-center flex-1 w-full px-0 text-center rounded xl:px-20 bg-zinc-800">
+          <div className="flex flex-col items-center justify-between flex-1 w-full p-1 overflow-y-auto text-center rounded h-96 bg-zinc-700">
               {savedRecipes.map((recipe) => (
                 // make a div that create an image of the recipe as theh top part of a card:
                 <div className="flex flex-col items-center justify-between flex-1 w-full p-5 text-center rounded bg-zinc-700">

@@ -20,13 +20,14 @@ const LoginButton = () => {
     <div>
       {user ? (
         <button
+        className="inline-flex items-center text-white"
           onClick={handleSignOut}>
-          <Logout />
+            Logout
         </button>
       ) : (
         <button
-
-          onClick={handleSignIn}><Login /></button>
+        className="inline-flex items-center text-white"
+          onClick={handleSignIn}>Login </button>
       )}
     </div>
   );

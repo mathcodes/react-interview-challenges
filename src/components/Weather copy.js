@@ -76,12 +76,12 @@ export default function Weather() {
           <div className="grid justify-between grid-cols-2 gap-3 my-auto mt-6 lg:grid-cols-4 card header">
             {/* Temperature */}
             <div className="grid w-full m-6 ">
-              <div className="grid justify-between h-24 gap-2 p-6 m-1 border text-violet-400 text-md bg-zinc-800 border-zinc-400 hover:border-violet-600"
+              <div className="grid justify-between h-24 gap-2 p-6 m-1 border text-violet-400 text-md bg-zinc-800 border-zinc-400 hover:border-sky-500"
                 onClick={handleGetTemp}
               >
                 Temperature:
                 <div
-                  className="w-12 h-8 my-auto text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600"
+                  className="w-12 h-8 my-auto text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-sky-500"
                   onClick={handleGetTemp}
                 >
                   {temp}
@@ -90,12 +90,12 @@ export default function Weather() {
             </div>
             {/* Wind Speed */}
             <div className="grid w-full m-6">
-              <div className="flex justify-between p-2 m-1 my-auto border text-violet-400 text-md bg-zinc-800 border-zinc-400 hover:border-violet-600"
+              <div className="flex justify-between p-2 m-1 my-auto border text-violet-400 text-md bg-zinc-800 border-zinc-400 hover:border-sky-500"
                 onClick={handleGetWind}
               >
                 Wind Speed:
                 <div
-                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600"
+                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-sky-500"
                   onClick={handleGetPrecipitation}
                 >
                   {wind}
@@ -104,12 +104,12 @@ export default function Weather() {
             </div>
             {/* Humidity */}
             <div className="grid w-full m-6">
-              <div className="flex justify-between p-2 m-1 my-auto border text-violet-400 text-md bg-zinc-800 border-zinc-400 hover:border-violet-600"
+              <div className="flex justify-between p-2 m-1 my-auto border text-violet-400 text-md bg-zinc-800 border-zinc-400 hover:border-sky-500"
                 onClick={handleGetHumidity}
               >
                 Humidity:
                 <div
-                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600"
+                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-sky-500"
                   onClick={handleGetPrecipitation}
                 >
                   {humidity}
@@ -118,12 +118,12 @@ export default function Weather() {
             </div>
             {/* Precipitation */}
             <div className="grid w-full mx-6">
-              <div className="flex justify-between p-2 m-1 my-auto border text-violet-400 text-md bg-zinc-800 border-zinc-400 hover:border-violet-600"
+              <div className="flex justify-between p-2 m-1 my-auto border text-violet-400 text-md bg-zinc-800 border-zinc-400 hover:border-sky-500"
                 onClick={handleGetPrecipitation}
               >
                 Precipitation:
                 <div
-                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-violet-600"
+                  className="p-2 m-1 text-blue-400 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-sky-500"
                   onClick={handleGetPrecipitation}
                 >
                   {precipitation}
