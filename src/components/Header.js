@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LoginButton from './LoginButton';
 
 function Header({ fName, id, handleSignIn, handleSignOut, user }) {
 
@@ -10,7 +11,7 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
   };
 
   return (
-    <header className="flex flex-row justify-between p-4 border-b-2 bg-zinc-800 border-zinc-400">
+    <header className="flex flex-row justify-between py-4 pl-4 pr-0.5 border-b-2 bg-zinc-800 border-zinc-400">
       <div className="inline-flex">
         <h1
           className="text-2xl font-bold text-white"
@@ -19,34 +20,31 @@ function Header({ fName, id, handleSignIn, handleSignOut, user }) {
       </div>
       <div>
         <button
-          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+          className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
         >
           <Link to="./chat">Chat</Link>
         </button>
         <button
-          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+          className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
         >
           <Link to="./recipes">Recipes</Link>
         </button>
         <button
-          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+          className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
         >
           <Link to="./weather">Weather</Link>
         </button>
         <button
-          className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
+          className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
         >
           <Link to="./profile">Profile</Link>
         </button>
-        {user ? (
-          <button
-            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-            onClick={handleSignOut}>Logout</button>
-        ) : (
-          <button
-            className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700"
-            onClick={handleSignIn}>Login</button>
-        )}
+        <button
+                  className="p-2 ml-4 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700 hover:scale-125"
+
+        >
+        <LoginButton user={user} handleSignIn={handleSignIn} handleSignOut={handleSignOut} />
+        </button>
       </div>
     </header>
   );

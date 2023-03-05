@@ -63,29 +63,29 @@ function UserProfile({ user, handleLogout, handleSignIn }) {
     , [firebase]);
 
 
-  useEffect(() => {
-    const authListener = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUserProfile((prevUserProfile) => ({
-          ...prevUserProfile,
-          name: user.displayName,
-          id: user.uid,
-        }));
-      } else {
-        setUserProfile({
-          name: '',
-          id: '',
-          credentials: null,
-          savedMessages: [],
-          savedRecipes: [],
-        });
-      }
-    });
+    // useEffect(() => {
+    //   const authListener = firebase.auth().onAuthStateChanged((user) => {
+    //     if (user) {
+    //       setUserProfile((prevUserProfile) => ({
+    //         ...prevUserProfile,
+    //         name: user.displayName,
+    //         id: user.uid,
+    //       }));
+    //     } else {
+    //       setUserProfile({
+    //         name: '',
+    //         id: '',
+    //         credentials: null,
+    //         savedMessages: [],
+    //         savedRecipes: [],
+    //       });
+    //     }
+    //   });
 
-    return () => {
-      authListener();
-    };
-  }, [firebase]);
+    //   return () => {
+    //     authListener();
+    //   };
+    // }, [firebase]);
 
   useEffect(() => {
     console.log('useEffect');
@@ -161,7 +161,7 @@ function UserProfile({ user, handleLogout, handleSignIn }) {
 
 
   return (
-    <div className="container flex flex-col py-2 text-white">
+    <div className="container flex flex-col py-2 mx-auto text-white m-h-screen bg-zinc-900">
       <h1 className="text-4xl font-bold">
         Welcome to your profile page, <span className="text-blue-500 hover:text-blue-700">{user.displayName}</span>
       </h1>
@@ -172,7 +172,7 @@ function UserProfile({ user, handleLogout, handleSignIn }) {
             Saved Messages
           </h1>
           <div className="flex items-center justify-center flex-1 w-full px-20 text-center rounded bg-zinc-800">
-            <div className="flex flex-col items-center justify-between flex-1 w-full p-5 text-center rounded bg-zinc-700">
+            <div className="flex flex-col items-center justify-between flex-1 w-full p-5 overflow-y-auto text-center rounded h-96 bg-zinc-700">
               {savedMessages.map((message) => (
                 <div className="flex items-center justify-between flex-1 w-full p-1 m-3 text-white rounded px-4text-center bg-zinc-500 ">
                   {message.text}
@@ -186,12 +186,12 @@ function UserProfile({ user, handleLogout, handleSignIn }) {
           </div>
         </div>
         {/* SAVED RECIPES */}
-        <div className="flex flex-col items-center justify-center flex-1 w-full px-20 text-center">
+      <div className="flex flex-col items-center justify-center flex-1 w-full h-full px-20 text-center">
           <h1 className="my-10 text-2xl font-bold ">
             Saved Recipes
           </h1>
           <div className="flex items-center justify-center flex-1 w-full px-20 text-center rounded bg-zinc-800">
-            <div className="flex flex-col items-center justify-between flex-1 w-full p-5 text-center rounded bg-zinc-700">
+          <div className="flex flex-col items-center justify-between flex-1 w-full p-5 overflow-y-auto text-center rounded h-96 bg-zinc-700">
               {savedRecipes.map((recipe) => (
                 // make a div that create an image of the recipe as theh top part of a card:
                 <div className="flex flex-col items-center justify-between flex-1 w-full p-5 text-center rounded bg-zinc-700">

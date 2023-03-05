@@ -7,6 +7,7 @@ export default function Weather() {
   const [precipitation, setPrecipitation] = useState('');
 
 
+
   let apiKey = '31b40bbc1dd3415db1783017232602';
 
 
@@ -16,15 +17,16 @@ export default function Weather() {
       const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=28449&days=1&aqi=no&alerts=no`);
       const data = await response.json();
       console.log(data);
-      // reference the temp from state and define it at data.current.temp_f;
-      temp = data.current.temp_f;
+
+      // Update the temp state using the setTemp function
+      const temp = data.current.temp_f;
       console.log(temp);
       setTemp(temp);
-      // handleSendMessage(newMessage);
     } catch (error) {
       console.error('Error fetching temp:', error);
     }
   };
+
 
 
 
@@ -34,10 +36,11 @@ export default function Weather() {
       const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=28449&days=1&aqi=no&alerts=no`);
       const data = await response.json();
       console.log(data);
-      wind = data.current.wind_mph;
+      const wind = data.current.wind_mph;
+
       console.log(wind);
       setWind(wind);
-      // handleSendMessage(newMessage);
+      console.log(wind);
     } catch (error) {
       console.error('Error fetching wind:', error);
     }
@@ -48,7 +51,7 @@ export default function Weather() {
       const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=28449&days=1&aqi=no&alerts=no`);
       const data = await response.json();
       console.log(data);
-      humidity = data.current.humidity;
+      const humidity = data.current.humidity;
       console.log(humidity);
       setHumidity(humidity);
       // handleSendMessage(newMessage);
@@ -62,7 +65,7 @@ export default function Weather() {
       const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=28449&days=1&aqi=no&alerts=no`);
       const data = await response.json();
       console.log(data);
-      precipitation = data.current.precip_in;
+      const precipitation = data.current.precip_in;
       console.log(precipitation);
       setPrecipitation(precipitation);
       // handleSendMessage(newMessage);
@@ -71,17 +74,12 @@ export default function Weather() {
     }
   };
 
-  useEffect(() => {
-    handleGetTemp();
-    handleGetWind();
-    handleGetHumidity();
-    handleGetPrecipitation();
-  }, []);
-
-
-
-
-  // return a page wit container and lots of tailwind styling including all animations available:
+  // useEffect(() => {
+  //   handleGetTemp();
+  //   handleGetWind();
+  //   handleGetHumidity();
+  //   handleGetPrecipitation();
+  // }, []);
 
   return (
     <div className="container mx-auto">
@@ -93,20 +91,32 @@ export default function Weather() {
                 <h1 className="pt-10 text-4xl font-bold text-center text-white">Weather</h1>
               </div>
               <div className="weather facts">
-                <h1>Temperature</h1>
-                {temp}
+                <div
+                  className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700" onClick={handleGetTemp}
+                >
+                  Temperature: {temp}
+                </div>
               </div>
               <div className="weather facts">
-                <h1>Wind</h1>
-                {wind}
+                <div
+                  className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700" onClick={handleGetWind}
+                >
+                  Wind Speed: {wind}
+                </div>
               </div>
               <div className="weather facts">
-                <h1>Humidity</h1>
-                {humidity}
+                <div
+                  className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700" onClick={handleGetHumidity}
+                >
+                  Humidity: {humidity}
+                </div>
               </div>
               <div className="weather facts">
-                <h1>Precipitation</h1>
-                {precipitation}
+                <div
+                  className="p-2 m-1 text-orange-300 border rounded-md text-md bg-zinc-800 border-zinc-400 hover:border-orange-700" onClick={handleGetPrecipitation}
+                >
+                  Precipitation: {precipitation}
+                </div>
               </div>
             </div>
           </div>

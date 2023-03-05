@@ -3,6 +3,7 @@ import { firebase } from './firebase/firebase';
 import { FirebaseContext } from './firebase/index';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Main from './components/Main';
+import Footer from './components/Footer';
 import Chat from './components/Chat';
 import Weather from './components/Weather';
 import RecipeGrabber from './components/RecipeGrabber';
@@ -39,7 +40,7 @@ function App() {
   return (
     <Router>
       <div
-          className="container h-screen bg-gradient-to-r from-zinc-900 to-zinc-800"
+          className="container flex flex-col min-h-screen bg-gradient-to-t from-zinc-900 to-zinc-300"
       >
         <Header user={user} fName={fName} handleSignIn={handleSignIn} handleSignOut={handleSignOut} id={user ? user.uid : null} />
         <Routes>
@@ -49,6 +50,10 @@ function App() {
           <Route path="/weather" element={<Weather />} />
           <Route path="/profile" element={user ? <UserProfile  user={user} handleLogout={handleSignOut} /> : <LoginPage />} />
         </Routes>
+      </div>
+{/* wrap fotter in div that makes it always on botto fo page */}
+      <div className="container flex flex-col justify-end w-full h-screen">
+        <Footer />
       </div>
     </Router>
   );
