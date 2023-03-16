@@ -1,21 +1,13 @@
 {
-  "name": "react-interview-7-search-feature",
+  "name": "feat-1-start",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@heroicons/react": "^2.0.16",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "chart.js": "^4.2.1",
-    "dotenv": "^16.0.3",
-    "firebase": "^9.17.1",
-    "os-browserify": "^0.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-firebase-hooks": "^5.1.1",
-    "react-icons": "^4.7.1",
-    "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -42,10 +34,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.7"
   }
 }
